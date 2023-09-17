@@ -1,0 +1,30 @@
+class AssetsConstants {
+  static const String _svgsPath = 'assets';
+  static const String emptyTrans = '$_svgsPath/empty.svg';
+  static const String createAccount = '$_svgsPath/createAccount.svg';
+  static const String back = '$_svgsPath/Navigations.svg';
+  static const String home = '$_svgsPath/home.svg';
+  static const String onWallet = '$_svgsPath/hover_wallet.svg';
+  static const String inbox = '$_svgsPath/inbox.svg';
+  static const String add = '$_svgsPath/add.svg';
+  static const String profile = '$_svgsPath/profile.svg';
+  static const String down = '$_svgsPath/arrow-down.svg';
+  static const String homeOutlined = '$_svgsPath/home_outline.svg';
+  static const String sent = '$_svgsPath/sent.svg';
+  static const String received = '$_svgsPath/received.svg';
+  static const String location = '$_svgsPath/location.svg';
+  static const String track = '$_svgsPath/track_icon.svg';
+  static const String truck = '$_svgsPath/truck_icon.svg';
+  static const String routeMarker = '$_svgsPath/route_marker.svg';
+  static const String requestTruck = '$_svgsPath/request_truck.svg';
+  static const String requestMover = '$_svgsPath/request_mover.svg';
+  static const String bus = '$_svgsPath/bus_icon.svg';
+  static const String user = '$_svgsPath/user.png';
+  static const String wallet = '$_svgsPath/wallet.svg';
+  static const String account = '$_svgsPath/account.svg';
+  static const String history = '$_svgsPath/history.svg';
+  static const String settings = '$_svgsPath/settings.svg';
+  static const String notification = '$_svgsPath/notification.svg';
+  static const String help = '$_svgsPath/help.svg';
+  static const String enter = '$_svgsPath/enter.svg';
+}
