@@ -34,12 +34,12 @@ class Wallet extends StatelessWidget {
                 'Balance',
                 style: TextStyle(
                     fontSize: 15,
-                    color: AppConst.textBlack,
+                    color: AppConst.textBlackVariant1,
                     fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 15.h),
               const Text(
-                '₦ 34,500.00',
+                '\u20A6 34,500.00',
                 style: TextStyle(
                     fontSize: 35,
                     color: AppConst.lightColor,
@@ -73,7 +73,8 @@ class Wallet extends StatelessWidget {
                   children: [
                     const Text(
                       'Transactions',
-                      style: TextStyle(color: AppConst.textBlack, fontSize: 18),
+                      style: TextStyle(
+                          color: AppConst.textBlackVariant1, fontSize: 18),
                     ),
                     SvgPicture.asset(
                       AssetsConstants.down,

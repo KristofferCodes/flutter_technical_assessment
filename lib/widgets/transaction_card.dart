@@ -55,7 +55,7 @@ class TransactionCard extends StatelessWidget {
                             'processed',
                             style: TextStyle(
                                 fontSize: 16,
-                                color: AppConst.textBlack,
+                                color: AppConst.textBlackVariant1,
                                 fontWeight: FontWeight.normal),
                           )
                         ],
@@ -76,7 +76,7 @@ class TransactionCard extends StatelessWidget {
                         'Today',
                         style: TextStyle(
                             fontSize: 16,
-                            color: AppConst.textBlack,
+                            color: AppConst.textBlackVariant1,
                             fontWeight: FontWeight.normal),
                       ),
                     ],

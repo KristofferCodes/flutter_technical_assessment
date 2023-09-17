@@ -36,3 +36,37 @@ class PrimaryButton extends StatelessWidget {
     );
   }
 }
+
+class SecondaryButton extends StatelessWidget {
+  const SecondaryButton(
+      {Key? key, required this.text, required this.onTap, this.textStyle})
+      : super(key: key);
+
+  final String text;
+  final TextStyle? textStyle;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: AppConst.btnColor, width: 1.5),
+            borderRadius: BorderRadius.circular(50.0)),
+        height: 60.h,
+        width: AppConst.width * .9,
+        child: Center(
+          child: Text(
+            text,
+            style: textStyle ??
+                TextStyle(
+                    color: AppConst.btnColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.h),
+          ),
+        ),
+      ),
+    );
+  }
+}
