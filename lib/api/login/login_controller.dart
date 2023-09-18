@@ -33,8 +33,9 @@ class LoginController extends StateNotifier<bool> {
       successSnackBar(context, r.data['message'].toString());
       token = r.data['data']['token'];
       // print(token);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomeView()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const HomeView()),
+          (route) => false);
     });
   }
 }

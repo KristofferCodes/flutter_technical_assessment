@@ -52,9 +52,7 @@ class _WalletState extends ConsumerState<Wallet> {
                 ref.watch(walletInfoProvider).when(
                       data: (data) {
                         return Text(
-                          NumberFormat.simpleCurrency(
-                                  name: 'NGN', decimalDigits: 2)
-                              .format(data.data!.balance),
+                          '\$${data.data!.balance}',
                           style: const TextStyle(
                               fontSize: 35,
                               color: AppConst.lightColor,
@@ -130,6 +128,7 @@ class _WalletState extends ConsumerState<Wallet> {
                           day: DateFormat.yMMMEd()
                               .format(data[index].createdAtDateOnly!),
                           source: data[index].source.toString(),
+                          fee: data[index].fee.toString(),
                         );
                       });
                 },

@@ -122,6 +122,7 @@ class _TransactionPageState extends ConsumerState<TransactionPage>
                                 day: DateFormat.yMMMEd()
                                     .format(data[index].createdAtDateOnly!),
                                 source: data[index].source.toString(),
+                                fee: data[index].fee.toString(),
                               );
                             });
                       },
@@ -149,6 +150,7 @@ class _TransactionPageState extends ConsumerState<TransactionPage>
                                 day: DateFormat.yMMMEd().format(
                                     secondList[index].createdAtDateOnly!),
                                 source: secondList[index].source.toString(),
+                                fee: data[index].fee.toString(),
                               );
                             });
                       },
@@ -176,6 +178,7 @@ class _TransactionPageState extends ConsumerState<TransactionPage>
                                 day: DateFormat.yMMMEd().format(
                                     secondList[index].createdAtDateOnly!),
                                 source: secondList[index].source.toString(),
+                                fee: data[index].fee.toString(),
                               );
                             });
                       },

@@ -14,9 +14,11 @@ class TransactionSummary extends StatelessWidget {
       required this.type,
       required this.source,
       required this.status,
-      required this.date});
+      required this.date,
+      required this.amount,
+      required this.fee});
 
-  final String type, status, date;
+  final String type, status, date, amount, fee;
   final String? source;
 
   @override
@@ -50,21 +52,32 @@ class TransactionSummary extends StatelessWidget {
             ),
             Column(
               children: [
-                Container(
-                    width: 70.h,
-                    height: 70.h,
-                    decoration: const ShapeDecoration(
-                      color: AppConst.regOverlay,
-                      shape: OvalBorder(),
-                    ),
-                    child: SvgPicture.asset(
-                      AssetsConstants.received,
-                    )),
+                type == 'DEPOSIT'
+                    ? Container(
+                        width: 70.h,
+                        height: 70.h,
+                        decoration: const ShapeDecoration(
+                          color: AppConst.regOverlay,
+                          shape: OvalBorder(),
+                        ),
+                        child: SvgPicture.asset(
+                          AssetsConstants.received,
+                        ))
+                    : Container(
+                        width: 70.h,
+                        height: 70.h,
+                        decoration: const ShapeDecoration(
+                          color: AppConst.yellowOverlay,
+                          shape: OvalBorder(),
+                        ),
+                        child: SvgPicture.asset(
+                          AssetsConstants.sent,
+                        )),
                 SizedBox(
                   height: 25.h,
                 ),
                 Text(
-                  type,
+                  '\$$amount',
                   style: const TextStyle(
                       fontSize: 35,
                       color: AppConst.lightColor,
@@ -134,13 +147,53 @@ class TransactionSummary extends StatelessWidget {
                             color: AppConst.textBlackVariant1,
                             fontWeight: FontWeight.w500),
                       ),
-                      Chip(
-                        label: Text(status,
-                            style: const TextStyle(
-                              color: AppConst.lightColor,
-                            )),
-                        backgroundColor: Colors.green,
-                      )
+                      status != 'PENDING'
+                          ? Chip(
+                              label: Text(status.toLowerCase(),
+                                  style: const TextStyle(
+                                    color: AppConst.lightColor,
+                                  )),
+                              backgroundColor: Colors.green,
+                            )
+                          : Chip(
+                              label: Text(status.toLowerCase(),
+                                  style: const TextStyle(
+                                    color: AppConst.yellow,
+                                  )),
+                              backgroundColor: AppConst.regOverlay,
+                            )
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(
+                    color: AppConst.textBlack,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Fee',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: AppConst.textBlackVariant1,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '\$$fee',
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: AppConst.lightColor,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                 ),

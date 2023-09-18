@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../constants/asset_constants.dart';
 import '../features/transactions/transaction_summary.dart';
@@ -14,12 +15,15 @@ class TransactionCard extends StatelessWidget {
     required this.amount,
     required this.day,
     required this.source,
+    required this.fee,
   });
 
-  final String type, status, amount, day, source;
+  final String type, status, amount, day, source, fee;
 
   @override
   Widget build(BuildContext context) {
+    // Create a NumberFormat instance with the currency symbol
+    var nairaFormat = NumberFormat.currency(symbol: '₦');
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -28,6 +32,8 @@ class TransactionCard extends StatelessWidget {
                   status: status,
                   type: type,
                   date: day,
+                  amount: amount,
+                  fee: fee,
                 )));
       },
       child: SizedBox(
@@ -68,15 +74,15 @@ class TransactionCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            type,
-                            style: TextStyle(
-                                fontSize: 17,
+                            type.toLowerCase(),
+                            style: const TextStyle(
+                                fontSize: 19,
                                 color: AppConst.lightColor,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            status,
-                            style: TextStyle(
+                            status.toLowerCase(),
+                            style: const TextStyle(
                                 fontSize: 16,
                                 color: AppConst.textBlackVariant1,
                                 fontWeight: FontWeight.normal),
@@ -89,15 +95,15 @@ class TransactionCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        amount,
-                        style: TextStyle(
+                        '\$$amount',
+                        style: const TextStyle(
                             fontSize: 17,
                             color: AppConst.lightColor,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        day,
-                        style: TextStyle(
+                        day.toLowerCase(),
+                        style: const TextStyle(
                             fontSize: 16,
                             color: AppConst.textBlackVariant1,
                             fontWeight: FontWeight.normal),
