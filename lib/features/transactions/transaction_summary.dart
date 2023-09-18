@@ -382,9 +382,6 @@ void _showBottomSheet(BuildContext context) {
                         )),
                   ),
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
                 PrimaryButton(
                   text: 'Report',
                   onTap: () {
