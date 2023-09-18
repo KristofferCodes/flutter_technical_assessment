@@ -1,16 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_technical_assessment/constants/asset_constants.dart';
-import 'package:flutter_technical_assessment/features/ui_server.dart';
 import 'package:flutter_technical_assessment/utils/constants.dart';
 
 import '../../api/login/login_controller.dart';
 import '../../widgets/primaryButton.dart';
 import '../../widgets/text_field.dart';
-import '../homepage/homepage.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -20,10 +17,10 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
     final isLoading = ref.watch(loginControllerProvider);
     return Scaffold(
       backgroundColor: AppConst.primaryColor,
@@ -120,11 +117,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     color: AppConst.yellow,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.h),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //     builder: (context) => const HomePage()));
-                                  },
                               )
                             ]),
                       ),
@@ -138,6 +130,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             context: context,
                             email: email.text,
                             password: password.text);
+                        // print('${email.text} kkk ${password.text}');
                       },
                       text: 'Log me in',
                     )
@@ -152,10 +145,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         width: MediaQuery.sizeOf(context).width * .5,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: const Color(0XFFF2F2F2),
+                          color: AppConst.primaryColor,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: AppConst.yellowOverlay.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(

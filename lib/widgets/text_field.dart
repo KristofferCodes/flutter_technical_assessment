@@ -22,7 +22,6 @@ class CustomTextField extends StatelessWidget {
   final InputDecoration? dcoration;
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     return Container(
       width: 375.w,
       decoration: BoxDecoration(

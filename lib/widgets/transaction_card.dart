@@ -9,14 +9,26 @@ import '../utils/constants.dart';
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
     super.key,
+    required this.type,
+    required this.status,
+    required this.amount,
+    required this.day,
+    required this.source,
   });
+
+  final String type, status, amount, day, source;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const TransactionSummary()));
+            builder: (context) => TransactionSummary(
+                  source: source,
+                  status: status,
+                  type: type,
+                  date: day,
+                )));
       },
       child: SizedBox(
         child: Padding(
@@ -28,31 +40,42 @@ class TransactionCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                          width: 40.h,
-                          height: 40.h,
-                          decoration: const ShapeDecoration(
-                            color: AppConst.yellowOverlay,
-                            shape: OvalBorder(),
-                          ),
-                          child: SvgPicture.asset(
-                            AssetsConstants.sent,
-                          )),
+                      type == 'WITHDRAWAL'
+                          ? Container(
+                              width: 40.h,
+                              height: 40.h,
+                              decoration: const ShapeDecoration(
+                                color: AppConst.yellowOverlay,
+                                shape: OvalBorder(),
+                              ),
+                              child: SvgPicture.asset(
+                                AssetsConstants.sent,
+                              ))
+                          : Container(
+                              width: 40.h,
+                              height: 40.h,
+                              decoration: const ShapeDecoration(
+                                color: AppConst.regOverlay,
+                                shape: OvalBorder(),
+                              ),
+                              child: SvgPicture.asset(
+                                AssetsConstants.received,
+                              )),
                       SizedBox(
                         width: 10.h,
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Transfer to Bank',
+                            type,
                             style: TextStyle(
                                 fontSize: 17,
                                 color: AppConst.lightColor,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'processed',
+                            status,
                             style: TextStyle(
                                 fontSize: 16,
                                 color: AppConst.textBlackVariant1,
@@ -62,18 +85,18 @@ class TransactionCard extends StatelessWidget {
                       )
                     ],
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '₦ 20,000',
+                        amount,
                         style: TextStyle(
                             fontSize: 17,
                             color: AppConst.lightColor,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Today',
+                        day,
                         style: TextStyle(
                             fontSize: 16,
                             color: AppConst.textBlackVariant1,

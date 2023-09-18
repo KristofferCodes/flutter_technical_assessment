@@ -41,6 +41,8 @@ dependencies:
   flutter_riverpod: ^2.4.0
   dio: ^4.0.6
   fpdart: ^1.1.0
+  lottie: ^2.6.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

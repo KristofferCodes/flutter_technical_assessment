@@ -9,7 +9,15 @@ import '../../utils/constants.dart';
 import '../../widgets/back.dart';
 
 class TransactionSummary extends StatelessWidget {
-  const TransactionSummary({super.key});
+  const TransactionSummary(
+      {super.key,
+      required this.type,
+      required this.source,
+      required this.status,
+      required this.date});
+
+  final String type, status, date;
+  final String? source;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +63,9 @@ class TransactionSummary extends StatelessWidget {
                 SizedBox(
                   height: 25.h,
                 ),
-                const Text(
-                  '₦ 1,275',
-                  style: TextStyle(
+                Text(
+                  type,
+                  style: const TextStyle(
                       fontSize: 35,
                       color: AppConst.lightColor,
                       fontWeight: FontWeight.bold),
@@ -65,8 +73,8 @@ class TransactionSummary extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const Text(
-                  'Sep 07, 2022 • 09:29 AM',
+                Text(
+                  date,
                   style: TextStyle(
                       fontSize: 15,
                       color: AppConst.textBlackVariant1,
@@ -80,14 +88,14 @@ class TransactionSummary extends StatelessWidget {
             const Divider(
               color: AppConst.textBlack,
             ),
-            const Column(
+            Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Source',
                         style: TextStyle(
                             fontSize: 18,
@@ -95,8 +103,8 @@ class TransactionSummary extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        'Booking',
-                        style: TextStyle(
+                        source ?? 'Booking',
+                        style: const TextStyle(
                             fontSize: 18,
                             color: AppConst.lightColor,
                             fontWeight: FontWeight.w500),
@@ -104,22 +112,22 @@ class TransactionSummary extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Divider(
                     color: AppConst.textBlack,
                   ),
                 ),
               ],
             ),
-            const Column(
+            Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Status',
                         style: TextStyle(
                             fontSize: 18,
@@ -127,8 +135,8 @@ class TransactionSummary extends StatelessWidget {
                             fontWeight: FontWeight.w500),
                       ),
                       Chip(
-                        label: Text('Processing',
-                            style: TextStyle(
+                        label: Text(status,
+                            style: const TextStyle(
                               color: AppConst.lightColor,
                             )),
                         backgroundColor: Colors.green,
@@ -136,7 +144,7 @@ class TransactionSummary extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Divider(
                     color: AppConst.textBlack,

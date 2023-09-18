@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/ui_server.dart';
 import '../../utilities.dart';
 import 'login_api.dart';
+
+String? token;
 
 final loginControllerProvider =
     StateNotifierProvider<LoginController, bool>((ref) {
@@ -26,11 +29,12 @@ class LoginController extends StateNotifier<bool> {
     state = false;
     res.fold((l) {
       failureSnackBar(context, l.message);
-      Navigator.pop(context);
     }, (r) {
-      successSnackBar(
-          context, r.data['status']['message']['friendlyMessage'].toString());
-      Navigator.pop(context);
+      successSnackBar(context, r.data['message'].toString());
+      token = r.data['data']['token'];
+      // print(token);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const HomeView()));
     });
   }
 }

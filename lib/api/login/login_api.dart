@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../dio_client.dart';
+import '../dio_exception.dart';
 import '../failure.dart';
 import '../type_defs.dart';
 
@@ -36,10 +37,10 @@ class LoginApi {
               options: Options(headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
               }));
-      print(response);
+      // print(response);
       return right(response);
     } on DioError catch (e) {
-      return left(Failure(e.message));
+      return left(Failure(DioExceptions.fromDioError(e).toString()));
     }
   }
 }
