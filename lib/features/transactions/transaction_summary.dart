@@ -26,7 +26,7 @@ class TransactionSummary extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppConst.primaryColor,
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -383,7 +383,7 @@ void _showBottomSheet(BuildContext context) {
                   ),
                 ),
                 SizedBox(
-                  height: 35.h,
+                  height: 15.h,
                 ),
                 PrimaryButton(
                   text: 'Report',
