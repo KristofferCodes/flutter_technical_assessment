@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter_technical_assessment/constants/asset_constants.dart';
 import 'package:flutter_technical_assessment/utils/constants.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../widgets/primaryButton.dart';
 import '../ui_server.dart';
@@ -21,7 +20,13 @@ class SuccessPage extends StatelessWidget {
             SizedBox(
               height: 130.h,
             ),
-            SvgPicture.asset(AssetsConstants.successful),
+            ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                AppConst.yellow, // Change this color to the desired color
+                BlendMode.srcIn,
+              ),
+              child: Lottie.asset('assets/successful.json'),
+            ),
             const Text(
               'Transaction Successfully Reported',
               style: TextStyle(
@@ -43,8 +48,9 @@ class SuccessPage extends StatelessWidget {
             ),
             PrimaryButton(
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const HomeView()));
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomeView()),
+                    (route) => false);
               },
               text: 'Back to Home',
               textStyle: const TextStyle(

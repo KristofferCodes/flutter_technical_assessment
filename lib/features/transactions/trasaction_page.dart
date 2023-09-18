@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_technical_assessment/constants/asset_constants.dart';
 import 'package:flutter_technical_assessment/utils/constants.dart';
 import 'package:flutter_technical_assessment/widgets/transaction_card.dart';
+import 'package:intl/intl.dart';
 
+import '../../api/transactions/transaction_controller.dart';
 import '../../widgets/back.dart';
 
-class TransactionPage extends StatefulWidget {
+class TransactionPage extends ConsumerStatefulWidget {
   const TransactionPage({super.key});
 
   @override
-  State<TransactionPage> createState() => _TransactionPageState();
+  ConsumerState<TransactionPage> createState() => _TransactionPageState();
 }
 
-class _TransactionPageState extends State<TransactionPage>
+class _TransactionPageState extends ConsumerState<TransactionPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  List<String> tabTexts = ['All', 'Received', 'Transfer'];
-  List<Color> tabColors = [
-    AppConst.textBlackVariant2,
-    AppConst.textBlackVariant2,
-    AppConst.textBlackVariant2
-  ];
   List<Widget> tabIcons = [
-    Container(), // Replace with your SVG asset paths
-    SvgPicture.asset(AssetsConstants.received),
-    SvgPicture.asset(AssetsConstants.sent),
+    SvgPicture.asset(AssetsConstants.allP),
+    SvgPicture.asset(AssetsConstants.receivedP),
+    SvgPicture.asset(AssetsConstants.transferP),
+  ];
+  List<Widget> tabIcons2 = [
+    SvgPicture.asset(AssetsConstants.allHd),
+    SvgPicture.asset(AssetsConstants.receivedHd),
+    SvgPicture.asset(AssetsConstants.transferHd),
   ];
   List<bool> tabSelected = [false, false, false];
 
@@ -41,15 +43,11 @@ class _TransactionPageState extends State<TransactionPage>
     setState(() {
       // Update the Chip text and color based on the selected tab index
       final selectedTabIndex = _tabController.index;
-      for (int i = 0; i < tabTexts.length; i++) {
+      for (int i = 0; i < tabIcons2.length; i++) {
         if (i == selectedTabIndex) {
-          tabTexts[i] = tabTexts[i];
-          tabColors[i] =
-              AppConst.yellow; // Change the color for the selected tab
+          tabIcons[i] = tabIcons2[i];
         } else {
-          tabTexts[i] = tabTexts[i];
-          tabColors[i] = AppConst
-              .textBlackVariant2; // Change the color for unselected tabs
+          tabIcons[i];
         }
       }
     });
@@ -67,8 +65,8 @@ class _TransactionPageState extends State<TransactionPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Back(),
-                  Text(
+                  const Back(),
+                  const Text(
                     'Wallet Transactions',
                     style: TextStyle(
                         fontSize: 20,
@@ -99,73 +97,92 @@ class _TransactionPageState extends State<TransactionPage>
                   // unselectedLabelColor: AppConst.textFieldGrey,
                   // labelStyle:
                   //     appstyle(17, AppConst.regBlue, FontWeight.normal),
-                  tabs: [
-                    for (int i = 0; i < tabTexts.length; i++)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 2), // Adjust padding here
-                        decoration: BoxDecoration(
-                          color: tabColors[i],
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            tabIcons[i], // SVG icon
-                            Text(tabTexts[i]),
-                          ],
-                        ),
-                      ),
-                  ],
+                  tabs: [for (int i = 0; i < tabIcons.length; i++) tabIcons[i]],
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               color: AppConst.textBlack,
             ),
             Expanded(
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  ListView(
-                    children: [
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                    ],
-                  ),
-                  ListView(
-                    children: [
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                    ],
-                  ),
-                  ListView(
-                    children: [
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                      // TransactionCard(),
-                    ],
-                  ),
+                  ref.watch(getTransactionProvider).when(
+                      data: (data) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: data.length,
+                            itemBuilder: (_, index) {
+                              return TransactionCard(
+                                type: data[index].type!,
+                                status: data[index].status!,
+                                amount: data[index].amount.toString(),
+                                day: DateFormat.yMMMEd()
+                                    .format(data[index].createdAtDateOnly!),
+                                source: data[index].source.toString(),
+                              );
+                            });
+                      },
+                      error: (error, st) =>
+                          Center(child: Text(error.toString())),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator())),
+                  ref.watch(getTransactionProvider).when(
+                      data: (data) {
+                        final secondList = [];
+                        data.forEach((element) {
+                          element.type == 'DEPOSIT'
+                              ? secondList.add(element)
+                              : null;
+                        });
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: secondList.length,
+                            itemBuilder: (_, index) {
+                              return TransactionCard(
+                                type: secondList[index].type!,
+                                status: secondList[index].status!,
+                                amount: secondList[index].amount.toString(),
+                                day: DateFormat.yMMMEd().format(
+                                    secondList[index].createdAtDateOnly!),
+                                source: secondList[index].source.toString(),
+                              );
+                            });
+                      },
+                      error: (error, st) =>
+                          Center(child: Text(error.toString())),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator())),
+                  ref.watch(getTransactionProvider).when(
+                      data: (data) {
+                        final secondList = [];
+                        data.forEach((element) {
+                          element.type == 'WITHDRAWAL'
+                              ? secondList.add(element)
+                              : null;
+                        });
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: secondList.length,
+                            itemBuilder: (_, index) {
+                              return TransactionCard(
+                                type: secondList[index].type!,
+                                status: secondList[index].status!,
+                                amount: secondList[index].amount.toString(),
+                                day: DateFormat.yMMMEd().format(
+                                    secondList[index].createdAtDateOnly!),
+                                source: secondList[index].source.toString(),
+                              );
+                            });
+                      },
+                      error: (error, st) =>
+                          Center(child: Text(error.toString())),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator())),
                 ],
               ),
             ),

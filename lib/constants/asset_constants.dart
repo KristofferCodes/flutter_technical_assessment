@@ -17,4 +17,10 @@ class AssetsConstants {
   static const String copy = '$_svgsPath/copy.svg';
   static const String book = '$_svgsPath/book.svg';
   static const String close = '$_svgsPath/close.svg';
+  static const String allHd = '$_svgsPath/all_highlighted.svg';
+  static const String allP = '$_svgsPath/all_plain.svg';
+  static const String receivedHd = '$_svgsPath/received_highlighted.svg';
+  static const String receivedP = '$_svgsPath/received_plain.svg';
+  static const String transferHd = '$_svgsPath/transfer_highlighted.svg';
+  static const String transferP = '$_svgsPath/transfer_plain.svg';
 }
