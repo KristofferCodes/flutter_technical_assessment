@@ -60,7 +60,8 @@ class _WalletState extends ConsumerState<Wallet> {
                         );
                       },
                       error: (error, st) => const Text('Unable to load data'),
-                      loading: () => Lottie.asset('assets/loading.json'),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
                     ),
                 SizedBox(height: 25.h),
                 Padding(
@@ -134,7 +135,7 @@ class _WalletState extends ConsumerState<Wallet> {
                 },
                 error: (error, st) => Center(child: Text(error.toString())),
                 loading: () =>
-                    Center(child: const CircularProgressIndicator())),
+                    const Center(child: CircularProgressIndicator())),
           ],
         ),
       ),
